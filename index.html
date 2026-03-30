@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="自動アフィリエイト投稿作成アプリ・文章作成キット">
+    <title>楽々アフィ太郎</title>
+    <!-- Google Fonts: 筆致のようなエレガントな明朝体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-decor"></div>
+    <div class="container">
+        <header>
+            <h1>🌸 楽々アフィ太郎</h1>
+            <p class="subtitle">あなただけの魅力を引き出す、SNS自動文章作成キット</p>
+        </header>
+
+        <section class="card form-section">
+            <p class="notice"><i class="fa-solid fa-circle-info"></i> 入力内容は自動保存され、次回から省略できます。</p>
+            
+            <form id="affiForm">
+                <div class="form-group">
+                    <label for="history"><i class="fa-solid fa-book-open"></i> 1. 自分の経歴・エピソード</label>
+                    <p class="hint">例: 以前は100円のパンを買うのも迷うような生活をしていました。</p>
+                    <textarea id="history" rows="4" placeholder="あなたの過去の悩みや、アフィリエイトを始めたきっかけを教えてください" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="success"><i class="fa-solid fa-star"></i> 2. 成功体験・変化</label>
+                    <p class="hint">例: 今では自分の稼いだお金で、子供の望むものを笑顔で買えるようになりました！</p>
+                    <textarea id="success" rows="4" placeholder="現状の変化や、達成できた小さな成功体験を教えてください" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="otherInfo"><i class="fa-solid fa-gift"></i> 3. その他の情報・特典など</label>
+                    <p class="hint">例: 私経由で参加された方には初期設定サポートをお付けします。</p>
+                    <textarea id="otherInfo" rows="4" placeholder="あなた独自のサポート内容や、紹介したい商品名・特徴を教えてください" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> 魔法の文章を生成する</button>
+            </form>
+        </section>
+
+        <!-- 結果表示セクション（初期非表示） -->
+        <section id="resultsSection" class="results-section hidden">
+            <h2>✨ 完成した投稿文（5パターン）</h2>
+            <p class="result-desc">以下のカードの内容をコピーして、Threadsに直接投稿できます。</p>
+            
+            <div id="postsContainer" class="posts-container">
+                <!-- JSでここにカードが生成されます -->
+            </div>
+            
+            <button id="resetBtn" class="reset-btn hidden"><i class="fa-solid fa-arrow-rotate-left"></i> もう一度作成する</button>
+        </section>
+    </div>
+
+    <!-- テンプレート用：JSからコピーされるHTML構造 -->
+    <template id="postTemplate">
+        <div class="post-card fade-in">
+            <h3 class="post-title"></h3>
+            <p class="post-explanation"></p>
+            <div class="post-content-container">
+                <textarea class="post-content-readonly" readonly></textarea>
+                <div class="action-buttons">
+                    <button class="copy-btn" title="文章をコピー"><i class="fa-regular fa-copy"></i> コピーする</button>
+                    <button class="threads-btn" title="Threadsを開く"><i class="fa-brands fa-threads"></i> Threadsへ投稿</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
