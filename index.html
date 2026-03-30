@@ -17,7 +17,7 @@
     <div class="background-decor"></div>
     <div class="container">
         <header>
-            <h1>🌸 楽々アフィ太郎</h1>
+            <h1>楽々アフィ太郎</h1>
             <p class="subtitle">あなただけの魅力を引き出す、SNS自動文章作成キット</p>
         </header>
 
@@ -43,37 +43,40 @@
                     <textarea id="otherInfo" rows="4" placeholder="あなた独自のサポート内容や、紹介したい商品名・特徴を教えてください" required></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="product"><i class="fa-solid fa-box"></i> 4. 今回売りたい商品やサービス</label>
+                    <p class="hint">例: スマホ教室の講座、〇〇の教材など。</p>
+                    <input type="text" id="product" placeholder="商品名やサービス名を入力してください" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pastPosts"><i class="fa-solid fa-comments"></i> 5. 過去のThreads投稿（5つ程度）</label>
+                    <p class="hint">あなたの口調を学習させるための投稿です。別の投稿をそのまま5つほどペーストしてください。</p>
+                    <textarea id="pastPosts" rows="6" placeholder="過去の投稿をここにペースト..." required></textarea>
+                </div>
+
                 <button type="submit" class="submit-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> 魔法の文章を生成する</button>
             </form>
         </section>
 
         <!-- 結果表示セクション（初期非表示） -->
         <section id="resultsSection" class="results-section hidden">
-            <h2>✨ 完成した投稿文（5パターン）</h2>
-            <p class="result-desc">以下のカードの内容をコピーして、Threadsに直接投稿できます。</p>
+            <h2>✨ 魔法のAIプロンプトが完成しました</h2>
+            <p class="result-desc">以下のテキストを「コピー」して、お好きなAI（ChatGPTなど）に貼り付けるだけで、あなたの口調を完コピした5つの文章が生成されます。</p>
             
-            <div id="postsContainer" class="posts-container">
-                <!-- JSでここにカードが生成されます -->
+            <div class="post-card fade-in">
+                <div class="post-content-container">
+                    <textarea id="aiPromptOutput" class="post-content-readonly" style="height: 350px;" readonly></textarea>
+                    <div class="action-buttons">
+                        <button id="copyPromptBtn" class="copy-btn" title="プロンプトをコピー"><i class="fa-regular fa-copy"></i> コピーする</button>
+                        <a href="https://chatgpt.com/" target="_blank" style="text-decoration: none;" class="threads-btn chatgpt-btn"><i class="fa-solid fa-robot"></i> ChatGPTを開く</a>
+                    </div>
+                </div>
             </div>
             
             <button id="resetBtn" class="reset-btn hidden"><i class="fa-solid fa-arrow-rotate-left"></i> もう一度作成する</button>
         </section>
     </div>
-
-    <!-- テンプレート用：JSからコピーされるHTML構造 -->
-    <template id="postTemplate">
-        <div class="post-card fade-in">
-            <h3 class="post-title"></h3>
-            <p class="post-explanation"></p>
-            <div class="post-content-container">
-                <textarea class="post-content-readonly" readonly></textarea>
-                <div class="action-buttons">
-                    <button class="copy-btn" title="文章をコピー"><i class="fa-regular fa-copy"></i> コピーする</button>
-                    <button class="threads-btn" title="Threadsを開く"><i class="fa-brands fa-threads"></i> Threadsへ投稿</button>
-                </div>
-            </div>
-        </div>
-    </template>
 
     <script src="script.js"></script>
 </body>

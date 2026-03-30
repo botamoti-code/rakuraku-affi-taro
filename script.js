@@ -4,16 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyInput = document.getElementById('history');
     const successInput = document.getElementById('success');
     const otherInfoInput = document.getElementById('otherInfo');
+    const productInput = document.getElementById('product');
+    const pastPostsInput = document.getElementById('pastPosts');
     
     const resultsSection = document.getElementById('resultsSection');
-    const postsContainer = document.getElementById('postsContainer');
+    const aiPromptOutput = document.getElementById('aiPromptOutput');
+    const copyPromptBtn = document.getElementById('copyPromptBtn');
     const resetBtn = document.getElementById('resetBtn');
-    const template = document.getElementById('postTemplate');
 
     // ローカルストレージキー
-    const STORAGE_KEY = 'rakuraku_affi_taro_data';
+    const STORAGE_KEY = 'rakuraku_affi_taro_data_v2';
 
-    // 1. ローカルストレージからデータを読み込む（2回目以降の自動補完）
+    // 1. ローカルストレージからデータを読み込む
     const loadFromStorage = () => {
         const savedData = localStorage.getItem(STORAGE_KEY);
         if (savedData) {
@@ -22,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 historyInput.value = parsed.history || '';
                 successInput.value = parsed.success || '';
                 otherInfoInput.value = parsed.otherInfo || '';
+                productInput.value = parsed.product || '';
+                pastPostsInput.value = parsed.pastPosts || '';
             } catch (e) {
                 console.error("Storage parse error", e);
             }
@@ -29,46 +33,46 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     loadFromStorage();
 
-    // 2. テンプレートの定義
-    // 入力データ({history, success, otherInfo})を受け取り、テキストを返す関数の配列
-    const generatePosts = (data) => {
-        const p1 = `昔の私は、${data.history}\n毎日「このままでいいのかな」って不安だった。\n\nでも、勇気を出して一歩踏み出したら、\n${data.success}\n\n最初は難しそうって思ったけど、\nここには優しく教えてくれる環境があったよ✨\n\n「あの時、行動して本当によかった」って心から思える。\nもし今の生活を変えたいなら、一緒に学んでみない？\n\n【🎁私からの特典】\n${data.otherInfo}\n\n一緒に頑張る仲間が欲しい人は、プロフィールのリンクをチェックしてね！👇`;
+    // 2. プロンプト生成関数
+    const generateAIPrompt = (data) => {
+        return `あなたはプロのSNSマーケターであり、私のThreads投稿のゴーストライターです。
+以下の【条件とルール】に従って、アフィリエイト用のThreads投稿文を【5パターン】作成してください。
+何よりも重要なのは、【私の過去の投稿の口調・文章の癖】を完全に模倣することです。AIっぽい不自然な表現は避けてください。
 
-        const p2 = `「自己投資って高そう…」\nって思うかもしれないけど、実はこれ【実質タダ】どころか【プラス】になるんです💡\n\n例えば、月に3人「一緒に学ぼう」って誘うだけで、\nあっという間に月額費用をカバーしてお釣りが出ちゃう計算に。💰\n\n私も最初は不安だったけど、\n${data.success}\n\n「お金を払って学ぶ」んじゃなくて「お釣りをもらいながら学ぶ」。\nこの感覚、もっと早く知りたかった！\n\n【✨私からのサポート】\n${data.otherInfo}\n\n気になったら、いつでも私のプロフを見てね！わからないことはDMで相談乗ります🌸`;
+---
+■ 私の基本情報
+・紹介したい商品/サービス: ${data.product}
+・私の過去の経歴/悩み: ${data.history}
+・得られた成功体験/変化: ${data.success}
+・その他のサポート情報/特典: ${data.otherInfo}
 
-        const p3 = `よくDMで「未経験でも大丈夫ですか？」って聞かれるんだけど…\n\nもちろん大丈夫！🙆‍♀️\nだって、私も最初は${data.history}\n\nSNSなんて見る専だったし、文章書くのも苦手だった。\n\nでも特別なスキルや動画編集なんていらなくて、\nこうやってThreadsで思ったことをテキストで書くだけ。\n今の環境で「正しい稼ぎ方」を教わったら、\n${data.success}\n\n不安な気持ち、すごくわかるから、\n${data.otherInfo}\n\nまずは一歩踏み出してみましょう✨プロフリンクから詳細見てね👇`;
+---
+■ 私の過去の投稿の口調（この文体を完全に真似してください）
+${data.pastPosts}
 
-        const p4 = `今日もコツコツ作業中💻✨\n\n最近、アフィリエイトの勉強が楽しくて。\n「あ、ここってこうやればいいんだ！」っていう発見の連続。\n\nもちろん最初からうまくいったわけじゃなくて、\n${data.history}\n\nでも、諦めずに続けてたら、\n${data.success}\nこんな未来が待ってるなんて思わなかったな☺️\n\nThreadsだけじゃなくて、もっと深い話は公式LINEでお伝えしてます！\n${data.otherInfo}\n\n公式LINEのリンクはプロフィールにあるので、気軽に遊びに来てね🕊️`;
+---
+■ 出力文字数
+各パターンにつき、140文字〜300文字程度（Threadsに最適な短文・改行多めの構成）
 
-        const p5 = `「誰から買うか」って、本当に大事だと思う。\nだから私は、自分が本当に良いと思ったものしか紹介しません☺️\n\n私がこの環境をおすすめする理由は、単にノウハウがすごいからじゃなくて、\n${data.history}だった私でも、\n${data.success}という変化を感じられたから。\n\nもちろん、簡単にすぐ！ってわけじゃないけど、コツコツやれば必ず結果はついてくる。\n\n私から参加してくれた方には、\n「${data.otherInfo}」という形でお手伝いさせていただきます🤝\n\n一緒に人生変えたい人、プロフィールのリンクでお待ちしてます🌸`;
+---
+■ 作成する5つのパターンのテーマ（以下のノウハウに基づく）
 
-        return [
-            {
-                title: 'パターン1: Before&After（共感・変化アピール）',
-                explanation: 'スライド4・8を応用。過去の悩みと現在の変化を対比させ、読者の感情を動かす基本スタイルです。',
-                content: p1
-            },
-            {
-                title: 'パターン2: 費用回収アピール（ロジカル・損したくない人向け）',
-                explanation: 'スライド3・5を応用。「実質タダ」になるロジックを提示し、経済的な心理ハードルを下げます。',
-                content: p2
-            },
-            {
-                title: 'パターン3: Q&A・初心者安心（ハードル低下）',
-                explanation: 'スライド7を応用。よくある質問に答える形で、未経験でもThreadsならテキストだけでできる手軽さを伝えます。',
-                content: p3
-            },
-            {
-                title: 'パターン4: プロセスエコノミー・日常（クローズド誘導）',
-                explanation: 'スライド7・9を応用。いま頑張っている姿を見せつつ、LINE等のクローズドな関係へ誘導して成約率を高めます。',
-                content: p4
-            },
-            {
-                title: 'パターン5: 信頼・誠実さアピール（付加価値の提供）',
-                explanation: 'スライド5・6を応用。「私から入る理由（特典）」を明確にし、無理な売り込み感を出さずに伴走感をアピールします。',
-                content: p5
-            }
-        ];
+【パターン1: Before&After（共感・変化アピール）】
+過去の悩み（100円のパン購入を迷う等）から、正しい学びによる現在の変化（子供に笑顔で絵本が買える等）を語る。機能ではなく「どう変われるか」を伝える。
+
+【パターン2: 費用回収アピール（ロジカル・損したくない人向け）】
+「自己投資は実質タダになる」という魔法のシミュレーション。数人紹介するだけで月額をカバーし、お釣りをもらいながら学ぶ状態になれることを伝える。
+
+【パターン3: Q&A・初心者安心（ハードル低下）】
+「SNS初心者でも大丈夫？」という質問に答える形式。おしゃれな写真や動画編集は不要で、テキスト入力だけで勝負できる手軽さ・低ハードルを伝える。
+
+【パターン4: プロセスエコノミー・日常（クローズド誘導）】
+「今、これを学んでいます」「ここが難しくて苦戦中」など現在進行形で投稿を体験談にし、売込み感をゼロにする。最後はLINE等のクローズドな場に誘導する。
+
+【パターン5: 信頼・付加価値の提供】
+「私から買う理由」を作る。私が本当に良いと思っている理由と、私経由で入った場合の特典（初期設定サポートや独自ガイド等）を伴走感をもって伝える。
+
+以上5つのルールに沿って、絵文字の使い方も私の過去の投稿に合わせて、5つの文章を出力してください。`;
     };
 
     // 3. フォーム送信処理
@@ -79,65 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = {
             history: historyInput.value.trim(),
             success: successInput.value.trim(),
-            otherInfo: otherInfoInput.value.trim()
+            otherInfo: otherInfoInput.value.trim(),
+            product: productInput.value.trim(),
+            pastPosts: pastPostsInput.value.trim()
         };
 
         // ローカルストレージへ保存
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
-        // 文章の生成
-        const posts = generatePosts(data);
+        // プロンプトの生成
+        const promptText = generateAIPrompt(data);
 
         // 表示のクリアと描画
-        postsContainer.innerHTML = '';
-        posts.forEach((post, index) => {
-            const clone = template.content.cloneNode(true);
-            const card = clone.querySelector('.post-card');
-            
-            // 少しずつフェードインさせるためのディレイ
-            card.style.animationDelay = `${index * 0.15}s`;
-
-            clone.querySelector('.post-title').textContent = post.title;
-            clone.querySelector('.post-explanation').textContent = post.explanation;
-            
-            const textarea = clone.querySelector('.post-content-readonly');
-            textarea.value = post.content;
-
-            // コピーボタンの処理
-            const copyBtn = clone.querySelector('.copy-btn');
-            copyBtn.addEventListener('click', async () => {
-                try {
-                    await navigator.clipboard.writeText(post.content);
-                    const originalText = copyBtn.innerHTML;
-                    copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> コピーしました！';
-                    copyBtn.style.color = 'var(--primary-color)';
-                    copyBtn.style.borderColor = 'var(--primary-color)';
-                    setTimeout(() => {
-                        copyBtn.innerHTML = originalText;
-                        copyBtn.style.color = '';
-                        copyBtn.style.borderColor = '';
-                    }, 2000);
-                } catch (err) {
-                    alert('コピーに失敗しました。お手数ですが手動でコピーしてください。');
-                }
-            });
-
-            // Threadsボタンの処理
-            const threadsBtn = clone.querySelector('.threads-btn');
-            threadsBtn.addEventListener('click', async () => {
-                // UXのため、Threadsを開く前にクリップボードにもコピーしておく
-                try {
-                    await navigator.clipboard.writeText(post.content);
-                } catch(e) { /* ignore */ }
-                
-                // ThreadsのインテントURL（テキストをURLエンコード）
-                const encodedText = encodeURIComponent(post.content);
-                const threadsUrl = `https://www.threads.net/intent/post?text=${encodedText}`;
-                window.open(threadsUrl, '_blank');
-            });
-
-            postsContainer.appendChild(clone);
-        });
+        aiPromptOutput.value = promptText;
 
         // UIの切り替え
         form.parentElement.classList.add('hidden');
@@ -148,7 +106,25 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsSection.scrollIntoView({ behavior: 'smooth' });
     });
 
-    // 4. リセット（もう一度作成）処理
+    // 4. コピーボタン処理
+    copyPromptBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(aiPromptOutput.value);
+            const originalText = copyPromptBtn.innerHTML;
+            copyPromptBtn.innerHTML = '<i class="fa-solid fa-check"></i> コピー完了！';
+            copyPromptBtn.style.color = 'var(--primary-color)';
+            copyPromptBtn.style.borderColor = 'var(--primary-color)';
+            setTimeout(() => {
+                copyPromptBtn.innerHTML = originalText;
+                copyPromptBtn.style.color = '';
+                copyPromptBtn.style.borderColor = '';
+            }, 2000);
+        } catch (err) {
+            alert('コピーに失敗しました。お手数ですが手動でコピーしてください。');
+        }
+    });
+
+    // 5. リセット（もう一度作成）処理
     resetBtn.addEventListener('click', () => {
         resultsSection.classList.add('hidden');
         resetBtn.classList.add('hidden');
