@@ -297,6 +297,76 @@ button {
     background: rgba(140, 123, 128, 0.05);
 }
 
+.profile-status {
+    background: rgba(247, 170, 183, 0.15);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.small-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    background: #fff;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    color: var(--text-muted);
+}
+
+.small-btn:hover {
+    background: #fcf8f9;
+    color: var(--text-main);
+}
+
+.section-title {
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 2rem 0;
+}
+
+.episode-group {
+    background: #fcf8f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.quick-fills {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.q-btn {
+    background: #fff;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.q-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }

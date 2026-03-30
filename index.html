@@ -22,61 +22,89 @@
         </header>
 
         <section class="card form-section">
-            <p class="notice"><i class="fa-solid fa-circle-info"></i> 入力内容は自動保存され、次回から省略できます。</p>
+            <div class="profile-status">
+                <i class="fa-solid fa-user-check"></i> <span id="loginMessage">情報が入力されていません</span>
+                <button type="button" id="clearProfileBtn" class="small-btn hidden">プロフィールをリセット</button>
+            </div>
+            <p class="notice"><i class="fa-solid fa-circle-info"></i> 入力内容はブラウザに自動保存され、次回からはサクサク入力できます！</p>
             
             <form id="affiForm">
+                
+                <h2 class="section-title"><i class="fa-solid fa-1"></i> あなたの商品のこと</h2>
                 <div class="form-group">
-                    <label for="history"><i class="fa-solid fa-book-open"></i> 1. 自分の経歴・エピソード</label>
-                    <p class="hint">例: 以前は100円のパンを買うのも迷うような生活をしていました。</p>
-                    <textarea id="history" rows="4" placeholder="あなたの過去の悩みや、アフィリエイトを始めたきっかけを教えてください" required></textarea>
+                    <label for="product">今回売りたい商品やサービス</label>
+                    <input type="text" id="product" placeholder="例: スマホ起業の講座" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="otherInfo">あなたの付加価値（独自サポート・特典）</label>
+                    <p class="hint">私経由なら何がついてくる？</p>
+                    <textarea id="otherInfo" rows="2" placeholder="例: 私経由で参加された方には初期設定サポートをお付けします。" required></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label for="success"><i class="fa-solid fa-star"></i> 2. 成功体験・変化</label>
-                    <p class="hint">例: 今では自分の稼いだお金で、子供の望むものを笑顔で買えるようになりました！</p>
-                    <textarea id="success" rows="4" placeholder="現状の変化や、達成できた小さな成功体験を教えてください" required></textarea>
+                <hr class="divider">
+
+                <h2 class="section-title"><i class="fa-solid fa-2"></i> あなたのストーリー（3ステップ）</h2>
+                <p class="hint">迷ったら「例文」ボタンを押してアレンジしてください。</p>
+
+                <div class="form-group episode-group">
+                    <label for="beforeText">【Before】過去の悩みや生活</label>
+                    <div class="quick-fills">
+                        <button type="button" class="q-btn" onclick="insertText('beforeText', '100円のパンを買うのも毎回計算して迷っていた')">例文: お金の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertText('beforeText', '毎日仕事と家事だけの往復で、自分の時間が全くなかった')">例文: 時間の悩み</button>
+                    </div>
+                    <textarea id="beforeText" rows="2" placeholder="例: 100円のパンを買うのも毎回計算して迷っていた" required></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label for="otherInfo"><i class="fa-solid fa-gift"></i> 3. その他の情報・特典など</label>
-                    <p class="hint">例: 私経由で参加された方には初期設定サポートをお付けします。</p>
-                    <textarea id="otherInfo" rows="4" placeholder="あなた独自のサポート内容や、紹介したい商品名・特徴を教えてください" required></textarea>
+                <div class="form-group episode-group">
+                    <label for="triggerText">【きっかけ】どうやって学び始めた？</label>
+                    <div class="quick-fills">
+                        <button type="button" class="q-btn" onclick="insertText('triggerText', 'この環境に出会って『正しい稼ぎ方』を知った')">例文: 環境との出会い</button>
+                        <button type="button" class="q-btn" onclick="insertText('triggerText', '今のままじゃダメだと思って自己投資を決意した')">例文: 決意</button>
+                    </div>
+                    <textarea id="triggerText" rows="2" placeholder="例: この環境に出会って『正しい稼ぎ方』を知った" required></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label for="product"><i class="fa-solid fa-box"></i> 4. 今回売りたい商品やサービス</label>
-                    <p class="hint">例: スマホ教室の講座、〇〇の教材など。</p>
-                    <input type="text" id="product" placeholder="商品名やサービス名を入力してください" required>
+                <div class="form-group episode-group">
+                    <label for="afterText">【After】現在の変化や小さな成功体験</label>
+                    <div class="quick-fills">
+                        <button type="button" class="q-btn" onclick="insertText('afterText', '子供が欲しがる絵本を笑顔で買ってあげられた')">例文: 買い物の変化</button>
+                        <button type="button" class="q-btn" onclick="insertText('afterText', 'スマホ一つで初報酬が出た')">例文: 報酬</button>
+                    </div>
+                    <textarea id="afterText" rows="2" placeholder="例: 子供が欲しがる絵本を笑顔で買ってあげられた！" required></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label for="pastPosts"><i class="fa-solid fa-comments"></i> 5. 過去のThreads投稿（5つ程度）</label>
-                    <p class="hint">あなたの口調を学習させるための投稿です。別の投稿をそのまま5つほどペーストしてください。</p>
-                    <textarea id="pastPosts" rows="6" placeholder="過去の投稿をここにペースト..." required></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> 魔法の文章を生成する</button>
+                <button type="submit" class="submit-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> スレッズ用文章を5つ生成する</button>
             </form>
         </section>
 
         <!-- 結果表示セクション（初期非表示） -->
         <section id="resultsSection" class="results-section hidden">
-            <h2>✨ 魔法のAIプロンプトが完成しました</h2>
-            <p class="result-desc">以下のテキストを「コピー」して、お好きなAI（ChatGPTなど）に貼り付けるだけで、あなたの口調を完コピした5つの文章が生成されます。</p>
+            <h2>✨ 完成したThreads投稿（5パターン）</h2>
+            <p class="result-desc">以下のカードの「Threadsへ投稿」ボタンを押すだけで、文章が自動でセットされます！</p>
             
-            <div class="post-card fade-in">
-                <div class="post-content-container">
-                    <textarea id="aiPromptOutput" class="post-content-readonly" style="height: 350px;" readonly></textarea>
-                    <div class="action-buttons">
-                        <button id="copyPromptBtn" class="copy-btn" title="プロンプトをコピー"><i class="fa-regular fa-copy"></i> コピーする</button>
-                        <a href="https://chatgpt.com/" target="_blank" style="text-decoration: none;" class="threads-btn chatgpt-btn"><i class="fa-solid fa-robot"></i> ChatGPTを開く</a>
-                    </div>
-                </div>
+            <div id="postsContainer" class="posts-container">
+                <!-- JSでここにカードが生成されます -->
             </div>
             
             <button id="resetBtn" class="reset-btn hidden"><i class="fa-solid fa-arrow-rotate-left"></i> もう一度作成する</button>
         </section>
     </div>
+
+    <!-- テンプレート用：JSからコピーされるHTML構造 -->
+    <template id="postTemplate">
+        <div class="post-card fade-in">
+            <h3 class="post-title"></h3>
+            <p class="post-explanation"></p>
+            <div class="post-content-container">
+                <textarea class="post-content-readonly" readonly></textarea>
+                <div class="action-buttons">
+                    <button class="copy-btn" title="文章をコピー"><i class="fa-regular fa-copy"></i> コピーする</button>
+                    <button class="threads-btn" title="Threadsを開く"><i class="fa-brands fa-threads"></i> Threadsへ投稿</button>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <script src="script.js"></script>
 </body>
