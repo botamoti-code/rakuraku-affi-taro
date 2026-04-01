@@ -35,6 +35,11 @@
                     <label for="product">今回売りたい商品やサービス</label>
                     <input type="text" id="product" placeholder="例: スマホ起業の講座" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="affiliateLink">アフィリエイトリンク（省略可）</label>
+                    <input type="url" id="affiliateLink" placeholder="例: https://...">
+                </div>
                 
                 <div class="form-group">
                     <label for="otherInfo">あなたの付加価値（独自サポート・特典）</label>
@@ -50,11 +55,11 @@
                 <div class="form-group episode-group">
                     <label for="beforeText">【Before】過去の悩みや生活</label>
                     <div class="quick-fills">
-                        <button type="button" class="q-btn" onclick="insertText('beforeText', '100円のパンを買うのも毎回計算して迷っていた')">1.お金の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('beforeText', '毎日仕事と家事の往復だけで、自分の時間なんて1秒もなかった')">2.時間の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('beforeText', '夫の収入に頼るしかなく、「どうせ私は何も意見できない」と我慢ばかりしていた')">3.家族の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('beforeText', '特別なスキルや資格もなく、「私には何の取り柄もない」と自信を持てなかった')">4.自己評価</button>
-                        <button type="button" class="q-btn" onclick="insertText('beforeText', '貯えも増えず、今の仕事をいつまで続けられるか分からず不安でいっぱいだった')">5.将来の不安</button>
+                        <button type="button" class="q-btn" onclick="insertExample('beforeText', 'money')">1.お金の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('beforeText', 'time')">2.時間の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('beforeText', 'family')">3.家族の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('beforeText', 'self')">4.自己評価</button>
+                        <button type="button" class="q-btn" onclick="insertExample('beforeText', 'future')">5.将来の不安</button>
                     </div>
                     <textarea id="beforeText" rows="2" placeholder="過去の悩みを選択、または入力してください" required></textarea>
                 </div>
@@ -62,11 +67,11 @@
                 <div class="form-group episode-group">
                     <label for="triggerText">【きっかけ】どうやって学び始めた？</label>
                     <div class="quick-fills">
-                        <button type="button" class="q-btn" onclick="insertText('triggerText', 'ここで「正しいお金の稼ぎ方」を知って、とにかくやってみようと決心した')">1.お金の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('triggerText', 'スキマ時間でもできると知って、通勤電車の中で学ぶことから始めた')">2.時間の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('triggerText', '自分の力で稼ぎたいと強く思い、この環境に飛び込んで一から学ぶことにした')">3.家族の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('triggerText', '「テキスト一つで発信できる」と聞き、これなら私にもできるかもしれないと一歩踏み出した')">4.自己評価</button>
-                        <button type="button" class="q-btn" onclick="insertText('triggerText', '「自力で稼ぐ力をつけるしかない」と焦りを感じ、本気で学ぶ決意をした')">5.将来の不安</button>
+                        <button type="button" class="q-btn" onclick="insertExample('triggerText', 'money')">1.お金の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('triggerText', 'time')">2.時間の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('triggerText', 'family')">3.家族の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('triggerText', 'self')">4.自己評価</button>
+                        <button type="button" class="q-btn" onclick="insertExample('triggerText', 'future')">5.将来の不安</button>
                     </div>
                     <textarea id="triggerText" rows="2" placeholder="きっかけを選択、または入力してください" required></textarea>
                 </div>
@@ -74,11 +79,11 @@
                 <div class="form-group episode-group">
                     <label for="afterText">【After】現在の変化や小さな成功体験</label>
                     <div class="quick-fills">
-                        <button type="button" class="q-btn" onclick="insertText('afterText', '今では値段を見ずに、子供が欲しがる絵本を笑顔で買ってあげられるようになった！')">1.お金の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('afterText', '自分のペースで作業できるから、心にゆとりを持って子供と向き合えるようになった！')">2.時間の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('afterText', '夫に頼らず自分でお金を生み出せるようになり、家族旅行の行き先も自分で提案できるようになった！')">3.家族の悩み</button>
-                        <button type="button" class="q-btn" onclick="insertText('afterText', '自分の発信に「共感しました」と言ってくれる人が増え、毎日が劇的に楽しくなった！')">4.自己評価</button>
-                        <button type="button" class="q-btn" onclick="insertText('afterText', '正しい努力の方向性が明確になり、将来への不安が消えて心から毎日を楽しめるようになった！')">5.将来の不安</button>
+                        <button type="button" class="q-btn" onclick="insertExample('afterText', 'money')">1.お金の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('afterText', 'time')">2.時間の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('afterText', 'family')">3.家族の悩み</button>
+                        <button type="button" class="q-btn" onclick="insertExample('afterText', 'self')">4.自己評価</button>
+                        <button type="button" class="q-btn" onclick="insertExample('afterText', 'future')">5.将来の不安</button>
                     </div>
                     <textarea id="afterText" rows="2" placeholder="現在の変化を選択、または入力してください" required></textarea>
                 </div>
